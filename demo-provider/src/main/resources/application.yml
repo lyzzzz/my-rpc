@@ -1,0 +1,12 @@
+rpc:
+  registry:
+    enabled: true
+    type: MEMORY
+    config:
+      host: 127.0.0.1
+      port: 8070
+  provider:
+    enabled: true
+    host: 127.0.0.1
+    port: 8071
+    instance-id: test-provider

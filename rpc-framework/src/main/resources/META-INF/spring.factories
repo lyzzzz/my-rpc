@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.lyz.rpc.registry.RegistryAutoConfiguration,\
+com.lyz.rpc.provider.ProviderAutoConfiguration,\
+com.lyz.rpc.consumer.ConsumerAutoConfiguration
