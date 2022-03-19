@@ -56,6 +56,15 @@ public class MemoryRegistryService implements RegistryService {
 
     }
 
+    @Override
+    public InstanceInfo discovery() {
+        // TODO 需要根据服务调用信息进行实例发现
+        InstanceInfo instanceInfo = new InstanceInfo();
+        instanceInfo.setHost("127.0.0.1");
+        instanceInfo.setPort(8071);
+        return instanceInfo;
+    }
+
     @AllArgsConstructor
     @NoArgsConstructor
     @Data

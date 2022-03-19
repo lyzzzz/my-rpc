@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  * @date 2022/3/18
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
+@Target(ElementType.FIELD)
 @Autowired
 public @interface RpcReference {
     String version() default "1.0.0";

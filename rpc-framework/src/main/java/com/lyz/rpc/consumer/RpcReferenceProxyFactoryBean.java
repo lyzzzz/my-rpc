@@ -1,7 +1,6 @@
 package com.lyz.rpc.consumer;
 
 import com.lyz.rpc.registry.RegistryService;
-import lombok.Setter;
 import org.springframework.beans.factory.FactoryBean;
 
 import java.lang.reflect.Proxy;
@@ -12,11 +11,8 @@ import java.lang.reflect.Proxy;
  * @date 2022/3/18
  */
 public class RpcReferenceProxyFactoryBean implements FactoryBean<Object> {
-    @Setter
-    private final RegistryService registryService;
-    @Setter
+    private RegistryService registryService;
     private Class<?> interfaceClass;
-    @Setter
     private String version;
     private Object object;
 
@@ -39,5 +35,13 @@ public class RpcReferenceProxyFactoryBean implements FactoryBean<Object> {
     @Override
     public Class<?> getObjectType() {
         return interfaceClass;
+    }
+
+    public void setInterfaceClass(Class<?> interfaceClass) {
+        this.interfaceClass = interfaceClass;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 }

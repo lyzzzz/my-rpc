@@ -7,3 +7,5 @@ rpc:
       port: 8070
   consumer:
     enabled: true
+server:
+  port: 8072

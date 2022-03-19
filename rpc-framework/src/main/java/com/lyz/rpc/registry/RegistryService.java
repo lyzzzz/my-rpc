@@ -24,4 +24,6 @@ public interface RegistryService {
      * 销毁注册中心
      */
     void destroy();
+
+    InstanceInfo discovery();
 }

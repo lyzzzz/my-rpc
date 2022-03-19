@@ -15,8 +15,10 @@ import org.springframework.context.annotation.Bean;
 public class ProviderAutoConfiguration {
     @Bean
     ProviderServer providerServer(RegistryService registryService,
+                                  RpcServiceRegistry rpcServiceRegistry,
                                   ProviderConfig providerConfig) {
         return new ProviderServer(registryService,
+                rpcServiceRegistry,
                 providerConfig.getHost(),
                 providerConfig.getPort(),
                 providerConfig.getInstanceId(),

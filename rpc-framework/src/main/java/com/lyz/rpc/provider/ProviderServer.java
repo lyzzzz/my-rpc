@@ -1,14 +1,20 @@
 package com.lyz.rpc.provider;
 
 import com.lyz.rpc.core.InstanceInfo;
+import com.lyz.rpc.protocol.ProtocolDecoder;
+import com.lyz.rpc.protocol.ProtocolEncoder;
+import com.lyz.rpc.protocol.ProtocolRequestHandler;
 import com.lyz.rpc.registry.RegistryService;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -28,14 +34,17 @@ public class ProviderServer implements InitializingBean {
     private String version;
     private Map<String, String> metadata;
     private RegistryService registryService;
+    private RpcServiceRegistry rpcServiceRegistry;
 
     public ProviderServer(RegistryService registryService,
+                          RpcServiceRegistry rpcServiceRegistry,
                           String host,
                           Integer port,
                           String instanceId,
                           String version,
                           Map<String, String> metadata) {
         this.registryService = registryService;
+        this.rpcServiceRegistry = rpcServiceRegistry;
         this.host = host;
         this.port = port;
         this.instanceId = instanceId;
@@ -79,6 +88,9 @@ public class ProviderServer implements InitializingBean {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
+                            ch.pipeline().addLast(new ProtocolEncoder());
+                            ch.pipeline().addLast(new ProtocolDecoder());
+                            ch.pipeline().addLast(new ProtocolRequestHandler(rpcServiceRegistry));
                         }
                     })
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
